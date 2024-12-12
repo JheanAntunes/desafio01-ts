@@ -18,12 +18,12 @@ export abstract class DioAccount {
 
   getName = () => this.name;
 
-  deposit = (valueDeposit: number) => {
+  deposit(valueDeposit: number) {
     //validation status account
     this.validateStatus();
     // add deposit in balance
-    this.setBalance(valueDeposit);
-  };
+    this.setBalance(valueDeposit + this.balance);
+  }
 
   withdraw = (valueWithdraw: number) => {
     //validation status account
@@ -36,19 +36,19 @@ export abstract class DioAccount {
     if (!this.validateWithdraw(valueWithdraw)) {
       return console.log(
         "Querido Cliente, O seu saldo é menor o que você quer sacar ",
-        this.getBalance(),
+        this.balance,
         " , temos opções de emprestimos. "
       );
     }
     //att balance
-    this.setBalance(valueWithdraw - this.getBalance());
+    this.setBalance(this.balance - valueWithdraw);
   };
 
   getBalance = () => this.balance;
 
   private validateWithdraw = (valueWithdraw: number) => {
     //validation withdraw
-    if (valueWithdraw >= this.getBalance()) {
+    if (valueWithdraw <= this.balance) {
       return true;
     }
     return false;
