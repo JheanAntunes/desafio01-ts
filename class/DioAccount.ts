@@ -1,42 +1,60 @@
+// [X] Implementar os métodos de depósito (deposit) e saque (withdraw) na classe DioAccount
+
+// [X] Os valores dos saldos devem ser alterados, de acordo com o valor informado para depósito
+// [X] Apenas contas com o status true e saldo (balance) maior que o valor solicitado podem fazer saques
+
 export abstract class DioAccount {
-  private name: string
-  private readonly accountNumber: number
-  balance: number = 0
-  private status: boolean = true
-
-  constructor(name: string, accountNumber: number){
-    this.name = name
-    this.accountNumber = accountNumber
+  private readonly name: string = "";
+  private readonly accountNumber: number = 0;
+  private balance: number = 0;
+  private status: boolean = true;
+  constructor(name: string, accountNumber: number) {
+    this.name = name;
+    this.accountNumber = accountNumber;
   }
+  private setBalance = (valueDeposit: number) => {
+    this.balance = valueDeposit;
+  };
 
-  setName = (name: string): void => {
-    this.name = name
-    console.log('Nome alterado com sucesso!')
-  }
+  getName = () => this.name;
 
-  getName = (): string => {
-    return this.name
-  }
+  deposit = (valueDeposit: number) => {
+    //validation status account
+    this.validateStatus();
+    // add deposit in balance
+    this.setBalance(valueDeposit);
+  };
 
-  deposit = (): void => {
-    if(this.validateStatus()){
-      console.log('Voce depositou')
+  withdraw = (valueWithdraw: number) => {
+    //validation status account
+    if (!this.validateStatus()) {
+      return console.log(
+        "Querido Cliente, a sua conta está inativa. Por favor entre em contato para ativa-la novamente."
+      );
     }
-  }
-
-  withdraw = (): void => {
-    console.log('Voce sacou')
-  }
-
-  getBalance = (): void => {
-    console.log(this.balance)
-  }
-
-  private validateStatus = (): boolean => {
-    if (this.status) {
-      return this.status
+    //validation balance
+    if (!this.validateWithdraw(valueWithdraw)) {
+      return console.log(
+        "Querido Cliente, O seu saldo é menor o que você quer sacar ",
+        this.getBalance(),
+        " , temos opções de emprestimos. "
+      );
     }
+    //att balance
+    this.setBalance(valueWithdraw - this.getBalance());
+  };
 
-    throw new Error('Conta inválida')
-  }
+  getBalance = () => this.balance;
+
+  private validateWithdraw = (valueWithdraw: number) => {
+    //validation withdraw
+    if (valueWithdraw >= this.getBalance()) {
+      return true;
+    }
+    return false;
+  };
+  private validateStatus = () => {
+    if (!this.status) throw new Error();
+    return this.status;
+  };
 }
