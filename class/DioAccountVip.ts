@@ -12,9 +12,9 @@ import { DioAccount } from "./DioAccount";
 export class DioAccountVip extends DioAccount {
   constructor(name: string, accountNumber: number) {
     super(name, accountNumber);
-    // polimorfismo
   }
-  deposit(valueDeposit: number) {
+  // polimorfismo
+  deposit(valueDeposit: number): void {
     const bonus = 10;
     super.deposit(valueDeposit + bonus);
     console.log("balance vip", this.getBalance());

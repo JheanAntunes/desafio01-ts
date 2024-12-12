@@ -12,48 +12,42 @@ export abstract class DioAccount {
     this.name = name;
     this.accountNumber = accountNumber;
   }
-  private setBalance = (valueDeposit: number) => {
+  private setBalance = (valueDeposit: number): void => {
     this.balance = valueDeposit;
   };
 
-  getName = () => this.name;
+  getName = (): string => this.name;
 
-  deposit(valueDeposit: number) {
+  deposit(valueDeposit: number): void {
     //validation status account
     this.validateStatus();
     // add deposit in balance
     this.setBalance(valueDeposit + this.balance);
   }
 
-  withdraw = (valueWithdraw: number) => {
+  withdraw = (valueWithdraw: number): void => {
     //validation status account
     if (!this.validateStatus()) {
-      return console.log(
-        "Querido Cliente, a sua conta está inativa. Por favor entre em contato para ativa-la novamente."
-      );
+      return;
     }
     //validation balance
     if (!this.validateWithdraw(valueWithdraw)) {
-      return console.log(
-        "Querido Cliente, O seu saldo é menor o que você quer sacar ",
-        this.balance,
-        " , temos opções de emprestimos. "
-      );
+      return;
     }
     //att balance
     this.setBalance(this.balance - valueWithdraw);
   };
 
-  getBalance = () => this.balance;
+  getBalance = (): number => this.balance;
 
-  private validateWithdraw = (valueWithdraw: number) => {
+  private validateWithdraw = (valueWithdraw: number): boolean => {
     //validation withdraw
     if (valueWithdraw <= this.balance) {
       return true;
     }
     return false;
   };
-  private validateStatus = () => {
+  private validateStatus = (): boolean => {
     if (!this.status) throw new Error();
     return this.status;
   };

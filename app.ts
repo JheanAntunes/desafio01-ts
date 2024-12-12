@@ -2,7 +2,7 @@ import { CompanyAccount } from "./class/CompanyAccount";
 import { DioAccountVip } from "./class/DioAccountVip";
 import { PeopleAccount } from "./class/PeopleAccount";
 
-const peopleAccount = new PeopleAccount(1, "jhean", 10);
+const peopleAccount: PeopleAccount = new PeopleAccount(1, "jhean", 10);
 console.log(peopleAccount.getName());
 console.log(peopleAccount.doc_id);
 
@@ -14,5 +14,5 @@ console.log("withdraw: ", companyAccount.getBalance()); // output balance 20
 companyAccount.getLoan(180);
 console.log("emprestimo: ", companyAccount.getBalance()); // output balance 200
 
-const peopleAccountVip = new DioAccountVip("jheanVip", 51);
+const peopleAccountVip: DioAccountVip = new DioAccountVip("jheanVip", 51);
 peopleAccountVip.deposit(100); // output 110
